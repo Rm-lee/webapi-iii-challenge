@@ -33,11 +33,22 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', validateUserId,(req, res) => {
-
+ const {id} = req.params
+ res.status(200).json(req.user)
 });
 
 router.get('/:id/posts', validateUserId,(req, res) => {
-
+ const {id} = req.params
+ users.getUserPosts(id)
+ .then(post => {
+  res.status(200).json(post)
+ })
+ .catch(error => {
+  res.status(500).json({
+   errorMessage: 'error retrieving user posts'
+  })
+ })
+ 
 });
 
 router.delete('/:id',validateUserId, (req, res) => {
