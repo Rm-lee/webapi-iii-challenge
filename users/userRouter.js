@@ -4,7 +4,16 @@ const router = express.Router();
 
 
 router.post('/', validateUser,(req, res) => {
-
+ const user = req.body
+ users.insert(user)
+ .then(user => {
+  res.status(201).json(user)
+ })
+ .catch(error => {
+  res.status(500).json({
+   errorMessage: "there was an error saving user to db"
+  })
+ })
 });
 
 router.post('/:id/posts',[validatePost, validateUserId],(req, res) => {
