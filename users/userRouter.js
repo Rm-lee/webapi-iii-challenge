@@ -52,11 +52,32 @@ router.get('/:id/posts', validateUserId,(req, res) => {
 });
 
 router.delete('/:id',validateUserId, (req, res) => {
-
+ const {id} = req.params
+ users.remove(id)
+ .then(records => {
+  res.status(200).json({
+   message: 'user deleted'
+  })
+ })
+ .catch(error => {
+  res.status(500).json({
+   errorMessage: ' error deleting user'
+  })
+ })
 });
 
 router.put('/:id', validateUserId,(req, res) => {
-
+const changes = req.body
+const { id } = req.params
+users.update(id,changes)
+.then(records => {
+ res.status(201)
+})
+.catch(error => {
+ res.status(500).json({
+  error: "there was an error updating records"
+ })
+})
 });
 
 //custom middleware
